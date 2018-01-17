@@ -5,14 +5,12 @@ import pygame
 import random
 
 # Define a structure to hold surface elements
-#class Surface(object):
-#    """docstring for Surface."""
-#    x = 0
-#    y = 0
-#    material = ""
-#    def __init__(self, material):
-#        super(Surface self).__init__()
-#        self.material = material
+class Surface(object):
+    x = 0
+    y = 0
+    material = ""
+    def __init__(self, material):
+        self.material = material
 
 # Define the VERSION
 VERSION = "0.1"
@@ -38,6 +36,21 @@ HEIGHT = 20
 
 # This sets the margin between each cell
 MARGIN = 2
+
+def colorize(formerColor):
+    if formerColor == BLUE:
+        if ( random.randint(1, 5) <= 2 ):
+            return BLUE
+    return colors.get(random.randint(1, 5))
+
+def materialize(color):
+    if color == BLUE:
+        material = "water"
+    elif color == ORE:
+        material = "iron"
+    else:
+        material = materials.get(random.randint(1, 8))
+
 
 # Create a 2 dimensional array. A two dimensional
 # array is simply a list of lists.
@@ -72,17 +85,10 @@ clock = pygame.time.Clock()
 
 
 # Draw the grid
+color = EARTH
 for row in range(ROWS):
     for column in range(COLUMNS):
-
-        color = colors.get(random.randint(1, 5))
-        if color == BLUE:
-            material = "water"
-        elif color == ORE:
-            material = "iron"
-        else:
-            material = materials.get(random.randint(1, 8))
-
+        color = colorize(color)
         pygame.draw.rect(screen,
                          color,
                          [(MARGIN + WIDTH) * column + MARGIN,
