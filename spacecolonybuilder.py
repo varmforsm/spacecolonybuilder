@@ -1,8 +1,9 @@
 """
     Space Colony Builder 0.1
 """
-import pygame
-import random
+import pygame, random, sys
+sys.path.append("./popup_menu/gamelib/")
+from popup_menu import NonBlockingPopupMenu
 
 # Define the VERSION
 VERSION = "0.1"
@@ -57,65 +58,6 @@ class GameBoard():
         else:
             material = materials.get(random.randint(1, 8))
 
-    def makePopup(self):
-        width = 20
-        height = 80
-        popupSurf = pygame.Surface((width, height))
-        options = ['Build',
-                   'Remove']
-        for i in range(len(options)):
-            textSurf = BASICFONT.render(options[i], 1, BLUE)
-            textRect = textSurf.get_rect()
-            textRect.top = self.top
-            textRect.left = self.left
-            self.top += pygame.font.Font.get_linesize(BASICFONT)
-            popupSurf.blit(textSurf, textRect)
-        popupRect = popupSurf.get_rect()
-        popupRect.centerx = SCREENWIDTH/2
-        popupRect.centery = SCREENHEIGHT/2
-        DISPLAYSURFACE.blit(popupSurf, popupRect)
-        pygame.display.update()
-
-    def doPopup(self):
-        #popup loop
-        while True:
-            #draw the popup
-            self.makePopup()
-            #check for keyboard or mouse events
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == MOUSEMOTION:
-                    #update mouse position
-                    self.mousex, self.mousey = event.pos
-                #check for left click
-                elif event.type == MOUSEBUTTONDOWN and event.button == 1:
-                    OPTION = option_selected(self)
-                    if OPTION != None:
-                        return OPTION
-                    else:
-                        return None
-            FPSCLOCK.tick(FPS)
-
-    def option_selected(self):
-        popupSurf = pygame.Surface(width, height)
-        options = ['Build',
-                   'Remove']
-        #draw up the surf, but don't blit it to the screen
-        for i in range(len(options)):
-            textSurf = BASICFONT.render(options[i], 1, BLUE)
-            textRect = textSurf.get_rect()
-            textRect.top = self.top
-            textRect.left = self.left
-            self.top += pygame.font.Font.get_linesize(BASICFONT)
-            popupSurf.blit(textSurf, textRect)
-            if textSurf.collidepoint(self.mousex, self.mousey):
-                return options[i]
-        popupRect = popupSurf.get_rect()
-        popupRect.centerx = SCREENWIDTH/2
-        popupRect.centery = SCREENHEIGHT/2
-
     def main(self):
         # Create a 2 dimensional array. A two dimensional
         # array is simply a list of lists.
@@ -146,8 +88,6 @@ class GameBoard():
 
         # Used to manage how fast the screen updates
         clock = pygame.time.Clock()
-
-
 
         # Draw the grid
         color = EARTH
@@ -180,6 +120,18 @@ class GameBoard():
                     print("Click ", pos, "Grid coordinates: ", row, column)
                     print("Clicked left button at (%d, %d)" % event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == RIGHT:
+                    menu_data = ['Main', 'Item 0', ['Submenu', 'Item 0'], 'Quit']
+                    while 1:
+                        # game stuff...
+                        PopupMenu(menu_data)
+                        if event.type == USEREVENT and event.code == 'MENU':
+                            print 'menu event: %s.%d: %s' % (e.name,e.item_id,e.text)
+                            if (event.name,event.text) == ('Main','Quit'):
+                                quit()
+                            else:
+                                # handle all game events normally
+                                pass
+
                     print("Clicked right button at (%d, %d)" % event.pos)
                     self.doPopup()
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MIDDLE:
