@@ -2,8 +2,8 @@
     Space Colony Builder 0.1
 """
 import pygame, random, sys
-sys.path.append("./popup_menu/gamelib/")
-from popup_menu import NonBlockingPopupMenu
+# sys.path.append("./popup_menu/gamelib/")
+from popup_menu.gamelib.popup_menu import PopupMenu, NonBlockingPopupMenu, USEREVENT
 
 # Define the VERSION
 VERSION = "0.1"
@@ -121,16 +121,18 @@ class GameBoard():
                     print("Clicked left button at (%d, %d)" % event.pos)
                 elif event.type == pygame.MOUSEBUTTONDOWN and event.button == RIGHT:
                     menu_data = ['Main', 'Item 0', ['Submenu', 'Item 0'], 'Quit']
-                    while 1:
+#                    while 1:
                         # game stuff...
-                        PopupMenu(menu_data)
-                        if event.type == USEREVENT and event.code == 'MENU':
-                            print 'menu event: %s.%d: %s' % (e.name,e.item_id,e.text)
-                            if (event.name,event.text) == ('Main','Quit'):
-                                quit()
-                            else:
-                                # handle all game events normally
-                                pass
+#                        NonBlockingPopupMenu(menu_data)
+                    PopupMenu(menu_data)
+                    print("event.type ", event.type ," event.code ", event.code)
+                    if event.type == USEREVENT and event.code == 'MENU':
+                        print 'menu event: %s.%d: %s' % (e.name,e.item_id,e.text)
+                        if (event.name,event.text) == ('Main','Quit'):
+                            quit()
+                        else:
+                            # handle all game events normally
+                            pass
 
                     print("Clicked right button at (%d, %d)" % event.pos)
                     self.doPopup()
