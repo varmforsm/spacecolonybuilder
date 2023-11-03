@@ -127,7 +127,7 @@ class GameBoard():
                     PopupMenu(menu_data)
                     print("event.type ", event.type ," event.code ", event.code)
                     if event.type == USEREVENT and event.code == 'MENU':
-                        print 'menu event: %s.%d: %s' % (e.name,e.item_id,e.text)
+                        printf('menu event: %s.%d: %s' % (e.name,e.item_id,e.text))
                         if (event.name,event.text) == ('Main','Quit'):
                             quit()
                         else:

@@ -81,9 +81,9 @@ menu = NonBlockingPopupMenu(menu_data)
 
 def handle_menu(e):
     global menu
-    print 'Menu event: %s.%d: %s' % (e.name,e.item_id,e.text)
+    print('Menu event: %s.%d: %s' % (e.name,e.item_id,e.text))
     if e.name is None:
-        print 'Hide menu'
+        print('Hide menu')
         menu.hide()
     elif e.name == 'Main':
         if e.text == 'Quit':
@@ -152,9 +152,9 @@ while 1:
     # processes only events posted by the menu.
     for e in menu.handle_events(pygame.event.get()):
         if e.type == KEYDOWN:
-            print 'Key pressed:',pygame.key.name(e.key)
+            print('Key pressed:',pygame.key.name(e.key))
         elif e.type == MOUSEBUTTONUP:
-            print 'Show menu'
+            print('Show menu')
             menu.show()
         elif e.type == MOUSEMOTION:
             cursor.rect.center = e.pos

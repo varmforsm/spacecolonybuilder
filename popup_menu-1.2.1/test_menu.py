@@ -56,7 +56,7 @@ menu_data = (
     'Quit',
 )
 def handle_menu(e):
-    print 'Menu event: %s.%d: %s' % (e.name,e.item_id,e.text)
+    print('Menu event: %s.%d: %s' % (e.name,e.item_id,e.text))
     if e.name == 'Main':
         if e.text == 'Quit':
             quit()

@@ -84,12 +84,12 @@ try:
     # subdirectories by type.
     import data
 except:
-    print 'warning: no data.py in module path: proceeding without it'
+    print('warning: no data.py in module path: proceeding without it')
 finally:
     try:
         font = pygame.font.Font(data.filepath('font', 'Vera.ttf'), 14)
     except:
-        print 'warning: cannot load font Vera.ttf: using system default'
+        print('warning: cannot load font Vera.ttf: using system default')
         font = pygame.font.SysFont(None, 20)
 
 bg_color = Color('grey')
@@ -569,7 +569,7 @@ if __name__ == '__main__':
             pygame.display.get_surface().blit(self.image, self.rect)
     cursor = Cursor()
     def handle_menu(e):
-        print 'menu event: %s.%d: %s' % (e.name,e.item_id,e.text)
+        print('menu event: %s.%d: %s' % (e.name,e.item_id,e.text))
         if e.name == 'Main':
             if e.text == 'Quit':
                 quit()
